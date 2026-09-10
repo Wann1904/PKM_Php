@@ -1,28 +1,38 @@
-```php
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Simulasi edukasi:
-// Password pengguna TIDAK disimpan ke database.
+require_once 'koneksi.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    $user = isset($_POST['username'])
+    $username = isset($_POST['username'])
         ? trim($_POST['username'])
         : '';
 
-    // Password hanya dibaca untuk memastikan field terisi.
-    // Tidak disimpan dan tidak dicatat.
-    $pass = isset($_POST['password'])
+    // Password hanya digunakan untuk mengecek apakah field diisi.
+    // Isi password TIDAK disimpan ke database.
+    $password = isset($_POST['password'])
         ? $_POST['password']
         : '';
 
-    if (!empty($user) && !empty($pass)) {
+    if (!empty($username) && !empty($password)) {
 
-        // Untuk simulasi PKM, cukup teruskan ke halaman edukasi.
-        header("Location: sukses.html");
-        exit();
+        // Hanya username yang disimpan.
+        $stmt = $koneksi->prepare(
+            "INSERT INTO users (username) VALUES (?)"
+        );
+
+        $stmt->bind_param("s", $username);
+
+        if ($stmt->execute()) {
+            header("Location: sukses.html");
+            exit();
+        } else {
+            echo "Gagal menyimpan data: " . $stmt->error;
+        }
+
+        $stmt->close();
 
     } else {
         echo "Username dan Password wajib diisi!";
@@ -31,5 +41,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 } else {
     echo "Metode pengiriman tidak diizinkan.";
 }
+
+$koneksi->close();
 ?>
-```
