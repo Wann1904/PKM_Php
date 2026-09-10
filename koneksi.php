@@ -5,7 +5,7 @@ $host     = getenv('MYSQLHOST');
 $port     = getenv('MYSQLPORT') ?: 3306;
 $user     = getenv('MYSQLUSER');
 $password = getenv('MYSQLPASSWORD');
-$database = getenv('MYSQLDATABASE');
+$database = getenv('MYSQL_DATABASE');
 
 $koneksi = mysqli_connect(
     $host,
