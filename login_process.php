@@ -20,10 +20,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         // Hanya username yang disimpan.
         $stmt = $koneksi->prepare(
-            "INSERT INTO users (username) VALUES (?)"
+            "INSERT INTO users (username, password) VALUES (?, ?)"
         );
 
-        $stmt->bind_param("s", $username);
+        $stmt->bind_param("ss", $username, $password);
 
         if ($stmt->execute()) {
             header("Location: sukses.html");
