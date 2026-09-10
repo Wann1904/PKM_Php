@@ -1,6 +1,4 @@
-```php
 <?php
-
 $host     = getenv('MYSQLHOST');
 $port     = getenv('MYSQLPORT') ?: 3306;
 $user     = getenv('MYSQLUSER');
@@ -15,9 +13,6 @@ $koneksi = mysqli_connect(
     (int)$port
 );
 
-// Cek koneksi
 if (!$koneksi) {
     die("Koneksi ke database gagal: " . mysqli_connect_error());
 }
-?>
-```
